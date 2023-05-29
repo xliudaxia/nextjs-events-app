@@ -1,3 +1,4 @@
+"use client"
 import React, { FormEvent, useRef } from "react";
 import Button from "../ui/BaseButton";
 import styles from "./EventSearch.module.css";

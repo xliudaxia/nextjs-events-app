@@ -1,7 +1,7 @@
 import { MongoClient, Sort } from "mongodb";
 
 export async function connectDatabase() {
-  const client = await MongoClient.connect("");
+  const client = await MongoClient.connect("mongodb+srv://luodayou:******@cluster0.j5eueoz.mongodb.net/newsletter?retryWrites=true&w=majority");
 
   return client;
 }
@@ -9,7 +9,7 @@ export async function connectDatabase() {
 export async function insertDocument(
   client: MongoClient,
   collection: string,
-  document: Document
+  document: any
 ) {
   const db = client.db();
 

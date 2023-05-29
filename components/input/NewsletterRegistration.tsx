@@ -1,3 +1,4 @@
+"use client"
 import { FormEvent, useRef } from "react";
 
 import styles from "./NewsletterRegistration.module.css";
