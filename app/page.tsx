@@ -3,7 +3,7 @@ import { getAllEvents } from "@/data/dummy-data";
 import NewsletterRegistration from "@/components/input/NewsletterRegistration";
 
 export default function Home() {
-  const events = getAllEvents()
+  const events = getAllEvents();
   return (
     <main>
       <NewsletterRegistration />
