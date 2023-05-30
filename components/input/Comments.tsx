@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 
 import CommentList from "./CommentList";
@@ -14,13 +14,18 @@ function Comments(props: { eventId: string }) {
 
   useEffect(() => {
     if (showComments) {
-      fetch("/api/comments/" + eventId)
-        .then((response) => response.json())
-        .then((data) => {
-          setComments(data.comments);
-        });
+      fetchLatestContent();
     }
+    /* eslint-disable */
   }, [showComments]);
+
+  const fetchLatestContent = () => {
+    fetch("/api/comments/" + eventId)
+      .then((response) => response.json())
+      .then((data) => {
+        setComments(data.comments);
+      });
+  };
 
   function toggleCommentsHandler() {
     setShowComments((prevStatus) => !prevStatus);
@@ -39,7 +44,10 @@ function Comments(props: { eventId: string }) {
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        fetchLatestContent();
+        console.log(data);
+      });
   }
 
   return (
