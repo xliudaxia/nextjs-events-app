@@ -24,17 +24,17 @@ function NewsletterRegistration() {
 
   return (
     <section className={styles.newsletter}>
-      <h2>Sign up to stay updated!</h2>
+      <h2>欢迎注册，并加入讨论!</h2>
       <form onSubmit={registrationHandler}>
         <div className={styles.control}>
           <input
             type="email"
             id="email"
-            placeholder="Your email"
-            aria-label="Your email"
+            placeholder="请输入您的邮箱~"
+            aria-label="请输入您的邮箱~"
             ref={emailInputRef}
           />
-          <button>Register</button>
+          <button>注册</button>
         </div>
       </form>
     </section>

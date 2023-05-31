@@ -1,15 +1,18 @@
+"use client";
 import React from "react";
-import { getFilteredEvents } from "@/data/dummy-data";
+import { Event } from "@/types";
 import EventList from "@/components/events/EventList";
 import ResultsTitle from "@/components/ResultTitlte/ResultsTitle";
 import ErrorAlert from "@/components/ErrorAlert/ErrorAlert";
+import { useEvents } from "@/utils/hooks";
 import BaseLink from "@/components/ui/BaseLink";
 
 const FilterEventPage = (props: any) => {
+  const [events, isLoading] = useEvents();
   const { params } = props;
   const { slug } = params;
   if (!slug) {
-    return <p className="center">Loading……</p>;
+    return <div className="loading" />;
   }
   const filteredYear = +slug.at(0);
   const filterdMonth = +slug.at(1);
@@ -28,12 +31,35 @@ const FilterEventPage = (props: any) => {
       </div>
     );
   }
-  const filterdEvents = getFilteredEvents({
+
+  const getFilteredEvents = (
+    events: Event[],
+    dateFilter: {
+      year: number;
+      month: number;
+    }
+  ) => {
+    const { year, month } = dateFilter;
+
+    let filteredEvents = events.filter((event) => {
+      const eventDate = new Date(event.date);
+      return (
+        eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+      );
+    });
+    return filteredEvents;
+  };
+
+  const filteredEvents = getFilteredEvents(events, {
     year: filteredYear,
     month: filterdMonth,
   });
-  
-  if (!filterdEvents || filterdEvents.length == 0) {
+
+  if (isLoading) {
+    return <div className="loading" />;
+  }
+
+  if (!filteredEvents || filteredEvents.length == 0) {
     return (
       <div className="center">
         <ErrorAlert>未查询到当前日期区间内数据</ErrorAlert>
@@ -46,7 +72,7 @@ const FilterEventPage = (props: any) => {
   return (
     <div className="center">
       <ResultsTitle date={date} />
-      <EventList items={filterdEvents} />
+      <EventList items={filteredEvents} />
     </div>
   );
 };

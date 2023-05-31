@@ -29,3 +29,28 @@ ul {
   margin: auto;
   text-align: center;
 }
+
+.loading {
+  position: fixed;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 8px solid #c417d3;
+  border-top-color: transparent;
+  border-radius: 100%;
+  animation: circle infinite 1s linear;
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

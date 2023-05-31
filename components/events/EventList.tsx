@@ -11,7 +11,7 @@ const EventList = (props: { items: Event[] }) => {
   return (
     <ul className={styles.list}>
       {
-        isLoading && <p>loading</p>
+        isLoading && <div className="loading"></div>
       }
       {items.map((event) => (
         <EventItem

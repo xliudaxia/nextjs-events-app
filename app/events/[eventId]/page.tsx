@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { Fragment } from "react";
 import { useEvents } from "@/utils/hooks";
 import Comments from "@/components/input/Comments";
@@ -13,7 +13,7 @@ const EventDetail = ({ params }: { params: { eventId: string } }) => {
   const event = eventArray[0];
 
   if (!event) {
-    return <p>Loading</p>;
+    return <div className="loading" />;
   }
 
   return (

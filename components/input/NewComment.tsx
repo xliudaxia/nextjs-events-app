@@ -51,20 +51,20 @@ function NewComment(props: {
     <form className={styles.form} onSubmit={sendCommentHandler}>
       <div className={styles.row}>
         <div className={styles.control}>
-          <label htmlFor="email">Your email</label>
+          <label htmlFor="email">邮箱地址</label>
           <input type="email" id="email" ref={emailInputRef} />
         </div>
         <div className={styles.control}>
-          <label htmlFor="name">Your name</label>
+          <label htmlFor="name">姓名</label>
           <input type="text" id="name" ref={nameInputRef} />
         </div>
       </div>
       <div className={styles.control}>
-        <label htmlFor="comment">Your comment</label>
+        <label htmlFor="comment">评论内容</label>
         <textarea id="comment" rows={5} ref={commentInputRef}></textarea>
       </div>
-      {isInvalid && <p>Please enter a valid email address and comment!</p>}
-      <button className={styles.btn}>Submit</button>
+      {isInvalid && <p>请输入一个有效的邮箱!</p>}
+      <button className={styles.btn}>提交</button>
     </form>
   );
 }

@@ -13,12 +13,10 @@ const Events = () => {
     router.push(fullPath);
   }
 
-  const featuredEvents = events.filter((event) => event.isFeatured);
-
   return (
     <main>
       <EventSearch onSearch={findEventsHandler} />
-      <EventList items={featuredEvents} />
+      <EventList items={events} />
     </main>
   );
 };

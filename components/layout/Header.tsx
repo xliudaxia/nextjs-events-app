@@ -11,7 +11,7 @@ const Header = () => {
       <nav className={styles.navigation}>
         <ul>
             <li>
-                <Link href="/events">Browse All Events</Link>
+                <Link href="/events">查看全部</Link>
             </li>
         </ul>
       </nav>

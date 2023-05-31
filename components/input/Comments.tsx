@@ -53,7 +53,7 @@ function Comments(props: { eventId: string }) {
   return (
     <section className={styles.comments}>
       <button onClick={toggleCommentsHandler}>
-        {showComments ? "Hide" : "Show"} Comments
+        {showComments ? "隐藏": "显示"}评论
       </button>
       {showComments && <NewComment onAddComment={addCommentHandler} />}
       {showComments && <CommentList items={comments} />}

@@ -34,7 +34,7 @@ const EventItem = (props: Omit<Omit<Event, "description">, "isFeatured">) => {
         </div>
         <div className={styles.actions}>
           <BaseLink link={exploreLink}>
-              <span>Explore Event</span>
+              <span>探索活动</span>
               <span className={styles.icon}>
                 <ArrowRightIcon />
               </span>
