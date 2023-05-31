@@ -1,9 +1,11 @@
+"use client"
 import EventList from "@/components/events/EventList";
-import { getAllEvents } from "@/data/dummy-data";
 import NewsletterRegistration from "@/components/input/NewsletterRegistration";
+import { useEvents } from "../utils/hooks";
 
 export default function Home() {
-  const events = getAllEvents();
+  const [events] = useEvents();
+
   return (
     <main>
       <NewsletterRegistration />

@@ -1,17 +1,19 @@
+"use client"
 import React, { Fragment } from "react";
-import { getEventById } from "@/data/dummy-data";
+import { useEvents } from "@/utils/hooks";
 import Comments from "@/components/input/Comments";
 import EventContent from "@/components/events/EventContent";
 import EventLogistics from "@/components/events/EventLogistics";
 import EventSummary from "@/components/events/EventSummary";
 
 const EventDetail = ({ params }: { params: { eventId: string } }) => {
-
   const { eventId } = params;
-  const event = getEventById(eventId);
+  const [events] = useEvents();
+  const eventArray = events.filter((event) => event.id === eventId);
+  const event = eventArray[0];
 
   if (!event) {
-    return <p>No Event found</p>;
+    return <p>Loading</p>;
   }
 
   return (

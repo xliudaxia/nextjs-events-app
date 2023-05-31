@@ -32,7 +32,7 @@ const FilterEventPage = (props: any) => {
     year: filteredYear,
     month: filterdMonth,
   });
-  console.log(filterdEvents, "filterdEvents");
+  
   if (!filterdEvents || filterdEvents.length == 0) {
     return (
       <div className="center">
