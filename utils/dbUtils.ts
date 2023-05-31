@@ -1,7 +1,7 @@
 import { MongoClient, Sort } from "mongodb";
 
 export async function connectDatabase() {
-  const client = await MongoClient.connect("mongodb+srv://luodayou:******@cluster0.j5eueoz.mongodb.net/newsletter?retryWrites=true&w=majority");
+  const client = await MongoClient.connect("mongodb://root:*****@120.53.241.206:27017");
 
   return client;
 }
@@ -11,7 +11,7 @@ export async function insertDocument(
   collection: string,
   document: any
 ) {
-  const db = client.db();
+  const db = client.db('newsletter');
 
   const result = await db.collection(collection).insertOne(document);
 
@@ -23,7 +23,7 @@ export async function getAllDocuments(
   collection: string,
   sort: Sort
 ) {
-  const db = client.db();
+  const db = client.db('newsletter');
 
   const documents = await db.collection(collection).find().sort(sort).toArray();
 
