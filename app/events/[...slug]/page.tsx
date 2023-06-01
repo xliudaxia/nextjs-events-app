@@ -62,7 +62,7 @@ const FilterEventPage = (props: any) => {
   if (!filteredEvents || filteredEvents.length == 0) {
     return (
       <div className="center">
-        <ErrorAlert>未查询到当前日期区间内数据</ErrorAlert>
+        <ErrorAlert>未查询到当前日期区间内数据，请切换其他日期</ErrorAlert>
         <BaseLink link="/events">查看全部</BaseLink>
       </div>
     );
