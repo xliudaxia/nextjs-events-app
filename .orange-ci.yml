@@ -1,0 +1,71 @@
+main:
+  push:
+    - services:
+        - docker
+      env:
+        IMAGE_TAG: default
+      stages:
+        - name: 修改 TAG 版本变量
+          script: echo -n $(date +"%Y%m%d-%H%M")
+          exports:
+            info: IMAGE_TAG
+          # 创建两个标签，多出一个作为历史版本
+        - name: create DOCKER_LATEST_TAG
+          script: echo -n csighub.tencentyun.com/julianlliu/nextjs-events:latest
+          envExport:
+            info: DOCKER_LATEST_TAG
+        - name: create DOCKER_TIME_TAG
+          script: echo -n ccsighub.tencentyun.com/julianlliu/nextjs-events:$IMAGE_TAG
+          envExport:
+            info: DOCKER_TIME_TAG
+        - name: create STKE_URL_TAG
+          script: echo -n https://kubernetes.woa.com/v4/projects/prjnsk2g/workloads/cls-juig7fub/ns-prjnsk2g-3431545-dev-test/StatefulSetPlus/nextjs-event-app
+          envExport:
+            info: STKE_URL_TAG
+        - name: build cache image
+          type: docker:cache
+          options:
+            dockerfile: Dockerfile.cache
+            by:
+              - package.json
+              - package-lock.json
+            versionBy:
+              - package-lock.json
+          exports:
+            name: DOCKER_CACHE_IMAGE_NAME
+        - name: use cache
+          image: $DOCKER_CACHE_IMAGE_NAME
+          commands:
+            - ln -sf "$NODE_PATH" ./node_modules
+            - npm run build
+        - name: 登陆 csighub
+          imports: https://git.woa.com/julianlliu/react-cicd-demo/blob/develop/passwd
+          script: docker login -u "$DOCKER_USER" -p "$DOCKER_PWD" csighub.tencentyun.com
+        - name: 构建镜像
+          script: docker build -t csighub.tencentyun.com/julianlliu/nextjs-events:latest -t csighub.tencentyun.com/julianlliu/nextjs-events:$IMAGE_TAG .
+        - name: 推送镜像到 csighub
+          script:
+            - docker push csighub.tencentyun.com/julianlliu/nextjs-events:latest
+            - docker push csighub.tencentyun.com/julianlliu/nextjs-events:$IMAGE_TAG
+        - name: docker logout
+          script: docker logout csighub.tencentyun.com
+        - name: 写入当前 docker 镜像内容
+          script:
+            - echo "${DOCKER_TIME_TAG}" >> message.txt
+            - echo "${DOCKER_LATEST_TAG}" >> message.txt
+            - echo "构建成功，请前往 TKE 平台查看部署结果 ${STKE_URL_TAG}" >> message.txt
+        - name: 发送镜像信息到企业微信
+          type: wework:message
+          options:
+            robot: 15becc9a-9496-4d54-a0bc-9d6307ebff2c
+            fromFile: message.txt
+        - name: send to git
+          type: git:comment
+          options:
+            fromFile: message.txt
+        - name: 更新stke 镜像
+          type: stke:update
+          options:
+            url: ${STKE_URL_TAG}
+            name: demo-container
+            image: ${DOCKER_TIME_TAG}
