@@ -54,11 +54,11 @@ main:
             - echo "${DOCKER_TIME_TAG}" >> message.txt
             - echo "${DOCKER_LATEST_TAG}" >> message.txt
             - echo "构建成功，请前往 TKE 平台查看部署结果 ${STKE_URL_TAG}" >> message.txt
-        - name: 发送镜像信息到企业微信
-          type: wework:message
-          options:
-            robot: 15becc9a-9496-4d54-a0bc-9d6307ebff2c
-            fromFile: message.txt
+        # - name: 发送镜像信息到企业微信
+        #   type: wework:message
+        #   options:
+        #     robot: 15becc9a-9496-4d54-a0bc-9d6307ebff2c
+        #     fromFile: message.txt
         - name: send to git
           type: git:comment
           options:
@@ -67,5 +67,5 @@ main:
           type: stke:update
           options:
             url: ${STKE_URL_TAG}
-            name: demo-container
+            name: nextjs-events
             image: ${DOCKER_TIME_TAG}
