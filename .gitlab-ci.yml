@@ -1,0 +1,14 @@
+image: node:18-alpine
+
+stages:
+  - deploy
+
+deploy:
+  image: docker
+  stage: deploy
+  script:
+  - whoami
+  - docker ps 
+  - docker build -t next-events-image .
+  - if [ $(docker ps -aq --filter name=next-events-container) ]; then docker rm -f next-events-container;fi
+  - docker run -d -p 8001:80 --name next-events-container next-events-image
